@@ -34,4 +34,3 @@ Some functions (like `pageBanner()` in `functions.php`) were customized compared
 - Original tutorial and starter files by Brad Schiff  
   [LearnWebCode University Static Repo](https://github.com/LearnWebCode/university-static)  
 - Extended and customized by **Dominic Repotente Conferido**
-8
