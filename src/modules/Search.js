@@ -2,7 +2,6 @@ import $ from 'jquery';
 class Search {
     // 1. describe and create/initiate our object
     constructor() {
-
             // this.name = "Jane Doe";
             // this.eyeColor = "Black";
             // this.hairColor = {};
@@ -32,7 +31,6 @@ events() {
 
 keyPressDispatcher(e) {
 
-
 if((e.keyCode === 83 || e.keyCode === 70) && !this.isOverlayOpen && !$("input, textarea").is(':focus')){
         this.openOverlay();
     }
@@ -43,7 +41,6 @@ if(e.keyCode==27 && this.isOverlayOpen){
     // 3. methods (function, action...)
 // wearsHat() { }
 // hairCut() {}
-
 typingLogic() {
   if(this.searchField.val() != this.previousValue){
 clearTimeout(this.typingTimer);
@@ -57,15 +54,20 @@ clearTimeout(this.typingTimer);
             this.resultsDiv.html('');
             this.isSpinnerVisible = false;
         }
-
   }
 
   this.previousValue = this.searchField.val();
 }
 
 getResults() {      
-    this.resultsDiv.html('Imagine real results here..');
-    this.isSpinnerVisible = false;
+    $.getJSON('http://localhost/fictional-university/wp-json/wp/v2/posts?search=' + this.searchField.val(), posts =>{
+        this.resultsDiv.html(`
+                <h2 class"section-overlay__section-title">General Information</h2>
+                <ul class="link-list min-list">
+               ${posts.map(item => `<li><a href="${item.link}">${item.title.rendered}</a></li>`).join('')}
+                </ul>
+                `);    
+    });
 }
 
 openOverlay() {
