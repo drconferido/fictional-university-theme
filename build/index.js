@@ -198,9 +198,7 @@ class Search {
   // 1. describe and create/initiate our object
   constructor() {
     // this.name = "Jane Doe";
-    // this.eyeColor = "Black";
-    // this.hairColor = {};
-    // this.head = {};
+    this.addSearchHTML();
     this.resultsDiv = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#search-overlay__results");
     this.openButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.js-search-trigger');
     this.closeButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.search-overlay__close');
@@ -212,11 +210,8 @@ class Search {
     this.previousValue;
     this.typingTimer;
   }
-
   // 2. events
   // on this.head feels cold, wearsHat
-  // on this.hairColor feels hot, hairCut
-
   events() {
     this.openButton.on('click', this.openOverlay.bind(this));
     this.closeButton.on('click', this.closeOverlay.bind(this));
@@ -242,7 +237,7 @@ class Search {
           this.resultsDiv.html('<div class="spinner-loader"></div>');
           this.isSpinnerVisible = true;
         }
-        this.typingTimer = setTimeout(this.getResults.bind(this), 2000);
+        this.typingTimer = setTimeout(this.getResults.bind(this), 760);
       } else {
         this.resultsDiv.html('');
         this.isSpinnerVisible = false;
@@ -251,18 +246,23 @@ class Search {
     this.previousValue = this.searchField.val();
   }
   getResults() {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default().getJSON('http://localhost/fictional-university/wp-json/wp/v2/posts?search=' + this.searchField.val(), posts => {
+    jquery__WEBPACK_IMPORTED_MODULE_0___default().when(jquery__WEBPACK_IMPORTED_MODULE_0___default().getJSON(universityDataRootUrl.root_url + '/wp-json/wp/v2/posts?search=' + this.searchField.val()), jquery__WEBPACK_IMPORTED_MODULE_0___default().getJSON(universityDataRootUrl.root_url + '/wp-json/wp/v2/pages?search=' + this.searchField.val())).then((posts, pages) => {
+      var combinedDataResults = posts[0].concat(pages[0]);
       this.resultsDiv.html(`
-                <h2 class"section-overlay__section-title">General Information</h2>
-                <ul class="link-list min-list">
-               ${posts.map(item => `<li><a href="${item.link}">${item.title.rendered}</a></li>`).join('')}
-                </ul>
-                `);
+                    <h2 class"section-overlay__section-title">General Information</h2>
+                    ${combinedDataResults.length ? ' <ul class="link-list min-list">' : '<p>No general information matches that search.</p>'}
+                    ${combinedDataResults.map(item => `<li><a href="${item.link}">${item.title.rendered}</a></li>`).join('')}
+                    ${combinedDataResults.length ? '</ul>' : ''} `);
+      this.isSpinnerVisible = false;
+    }, () => {
+      this.resultsDiv.html('<p>Unexpected error; please try again.</p>');
     });
   }
   openOverlay() {
     this.searchOverlay.addClass('search-overlay--active');
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('body').addClass('body-no-scroll');
+    this.searchField.val('');
+    setTimeout(() => this.searchField.focus(), 301);
     console.log("Our open method just ran!");
     this.isOverlayOpen = true;
   }
@@ -271,6 +271,21 @@ class Search {
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('body').removeClass('body-no-scroll');
     console.log("Our close method just ran!");
     this.isOverlayOpen = false;
+  }
+  addSearchHTML() {
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('body').append(`
+            <div class="search-overlay">
+  <div class="search-overlay__top">
+    <div class="container">
+      <i class="fa fa-search search-overlay__icon" aria-hidden="true"></i>
+      <input type="text" class="search-term" placeholder="What are you looking for?" id="search-term">
+         <i class="fa fa-window-close search-overlay__close" aria-hidden="true"></i>
+    </div>
+  </div>
+  <div class="container">
+    <div id="search-overlay__results"></div>
+  </div>
+</div>`);
   }
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Search);
