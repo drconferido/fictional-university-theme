@@ -1,0 +1,15 @@
+<?php
+
+
+add_action('rest_api_init', 'universityRegisterSearch');
+
+function universityRegisterSearch() {
+  register_rest_route('ficUniverity/v1','search',array(
+    'methods' => WP_REST_SERVER::READABLE,
+    'callback' => 'universitySearchResults'
+  ));
+}
+
+function universitySearchResults(){
+    return 'Congratulations, you have created a custom endpoint for this WordPress Fictional University theme.';
+}

@@ -249,9 +249,9 @@ class Search {
     jquery__WEBPACK_IMPORTED_MODULE_0___default().when(jquery__WEBPACK_IMPORTED_MODULE_0___default().getJSON(universityDataRootUrl.root_url + '/wp-json/wp/v2/posts?search=' + this.searchField.val()), jquery__WEBPACK_IMPORTED_MODULE_0___default().getJSON(universityDataRootUrl.root_url + '/wp-json/wp/v2/pages?search=' + this.searchField.val())).then((posts, pages) => {
       var combinedDataResults = posts[0].concat(pages[0]);
       this.resultsDiv.html(`
-                    <h2 class"section-overlay__section-title">General Information</h2>
+                    <h2 class="section-overlay__section-title">General Information</h2>
                     ${combinedDataResults.length ? ' <ul class="link-list min-list">' : '<p>No general information matches that search.</p>'}
-                    ${combinedDataResults.map(item => `<li><a href="${item.link}">${item.title.rendered}</a></li>`).join('')}
+                    ${combinedDataResults.map(item => `<li><a href="${item.link}">${item.title.rendered}</a> ${item.type === 'post' ? `by ${item.authorName}` : ''}</li>`).join('')}
                     ${combinedDataResults.length ? '</ul>' : ''} `);
       this.isSpinnerVisible = false;
     }, () => {
