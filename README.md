@@ -33,4 +33,8 @@ Some functions (like `pageBanner()` in `functions.php`) were customized compared
 ## 🏷️ Credits
 - Original tutorial and starter files by Brad Schiff  
   [LearnWebCode University Static Repo](https://github.com/LearnWebCode/university-static)  
-- Extended and customized by **Dominic Repotente Conferido**
+- Extended and customized by **Dominic Conferido**
+
+## 🔎 Keyboard Shortcuts
+
+If you want to go directly to the search textbox without clicking it (located at the top right), just press **"s"** or **"f"** on your keyboard.

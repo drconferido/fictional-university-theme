@@ -54,20 +54,62 @@ clearTimeout(this.typingTimer);
   this.previousValue = this.searchField.val();
 }
 
-getResults() {      
-    $.when($.getJSON(universityDataRootUrl.root_url + '/wp-json/wp/v2/posts?search=' + this.searchField.val()),
-    $.getJSON(universityDataRootUrl.root_url + '/wp-json/wp/v2/pages?search=' + this.searchField.val())
-    ).then((posts, pages) => {
-    var combinedDataResults = posts[0].concat(pages[0]);       
+getResults() {    
+    $.getJSON(universityDataRootUrl.root_url + '/wp-json/ficUniverity/v1/search?term=' + this.searchField.val(), (dataResults) =>{
                 this.resultsDiv.html(`
-                    <h2 class="section-overlay__section-title">General Information</h2>
-                    ${combinedDataResults.length ? ' <ul class="link-list min-list">' : '<p>No general information matches that search.</p>'}
-                    ${combinedDataResults.map(item => `<li><a href="${item.link}">${item.title.rendered}</a> ${item.type === 'post' ? `by ${item.authorName}` : ''}</li>`).join('')}
-                    ${combinedDataResults.length ? '</ul>' : ''} `);   
-                    this.isSpinnerVisible = false; 
-        }, ()=>{
-            this.resultsDiv.html('<p>Unexpected error; please try again.</p>');
-        });
+                  <div class="row">
+                  <div class="one-third">
+                  <h2 class="section-overlay__section-title">General Information</h2>
+                  ${dataResults.generalInfo.length ? ' <ul class="link-list min-list">' : '<p>No general information matches that search.</p>'}
+                  ${dataResults.generalInfo.map(item => `<li><a href="${item.permalink}">${item.title}</a> ${item.postType === 'post' ? `by ${item.authorName}` : ''}</li>`).join('')}
+                  ${dataResults.generalInfo.length ? '</ul>' : ''}
+                  </div>
+                  <div class="one-third">
+                  <h2 class="section-overlay__section-title">Programs</h2>
+                   ${dataResults.programs.length ? ' <ul class="link-list min-list">' : `<p>No programs match that search. <a href="${universityDataRootUrl.root_url}/programs/">View all programs</a></p>`}
+                  ${dataResults.programs.map(item => `<li><a href="${item.permalink}">${item.title}</a></li>`).join('')}
+                  ${dataResults.programs.length ? '</ul>' : ''}
+
+
+                  <h2 class="section-overlay__section-title">Professors</h2>
+                   ${dataResults.professors.length ? ' <ul class="professor-cards">' : '<p>No professors match that search.</p>'}
+                  ${dataResults.professors.map(item => `
+                       <li class="professor-card__list-item">
+                      <a class="professor-card" href="${item.permalink}">
+                          <img class="professor-card__image" src="${item.image}">
+                          <span class="professor-card__name">${item.title}</span>
+                      </a>
+                    </li>
+                  `).join('')}
+                  ${dataResults.professors.length ? '</ul>' : ''}
+                  </div>
+                  <div class="one-third">
+                  <h2 class="section-overlay__section-title">Campuses</h2>
+                  ${dataResults.campuses.length ? ' <ul class="link-list min-list">' : `<p>No campuses match that search. <a href="${universityDataRootUrl.root_url}/campuses/">View all campuses</a></p>`}
+                  ${dataResults.campuses.map(item => `<li><a href="${item.permalink}">${item.title}</a></li>`).join('')}
+                  ${dataResults.campuses.length ? '</ul>' : ''}
+
+
+                  <h2 class="section-overlay__section-title">Events</h2>
+                  ${dataResults.events.length ? '' : `<p>No events match that search. <a href="${universityDataRootUrl.root_url}/events/">View all events</a></p>`}
+                  ${dataResults.events.map(item => `
+                     <div class="event-summary">
+             <a class="event-summary__date t-center" href="${item.permalink}">
+              <span class="event-summary__month">${item.month}</span>
+                      <span class="event-summary__day">${item.day}</span>
+            </a>
+             <div class="event-summary__content">
+              <h5 class="event-summary__title headline headline--tiny"><a href="${item.permalink}"> ${item.title} </a></h5>
+              <p>${item.description} <a href="${item.permalink}" class="nu gray">Learn more</a></p>
+          </div>  
+            </div>
+                    `).join('')}
+               
+                  </div>
+                  </div>  
+                    `);
+                    this.isSpinnerVisible = false;
+    });
 }
 
 openOverlay() {

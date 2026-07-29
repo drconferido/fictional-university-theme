@@ -27,24 +27,37 @@ function universitySearchResults($data){
             array_push($searchResults['generalInfo'], array(
                 'title' => get_the_title(),
                 'permalink' => get_the_permalink(),
+                'postType' => get_post_type(),
+                'authorName' => get_the_author()
             ));
         }  
         if(get_post_type() ==='professor'){
                     array_push($searchResults['professors'], array(
                         'title' => get_the_title(),
                         'permalink' => get_the_permalink(),
+                        'image' => get_the_post_thumbnail_url(0,'professorLandscape')
                     ));
         }  
         if(get_post_type() ==='program'){
                     array_push($searchResults['programs'], array(
                         'title' => get_the_title(),
-                        'permalink' => get_the_permalink(),
+                        'permalink' => get_the_permalink()
                     ));
         }  
         if(get_post_type() ==='event'){
+            $description = null;
+            if(has_excerpt()){
+                 $description = get_the_excerpt();
+                   } else {
+                            $description = wp_trim_words(get_the_content(), 18); // raw output (WP functions with markup)
+                  }
+                $eventDateValue = new DateTime(get_field('event_date'));
                     array_push($searchResults['events'], array(
                         'title' => get_the_title(),
                         'permalink' => get_the_permalink(),
+                        'month' => $eventDateValue->format('M'),
+                        'day' => $eventDateValue->format('d'),
+                        'description' => $description,
                     ));
         }  
         if(get_post_type() ==='campus'){
