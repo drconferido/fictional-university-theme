@@ -3,7 +3,8 @@ add_action('rest_api_init', 'universityRegisterSearch');
 function universityRegisterSearch() {
   register_rest_route('ficUniverity/v1','search',array(
     'methods' => WP_REST_SERVER::READABLE,
-    'callback' => 'universitySearchResults'
+    'callback' => 'universitySearchResults',
+     'permission_callback' => '__return_true'
   ));
 }
 
@@ -41,7 +42,8 @@ function universitySearchResults($data){
         if(get_post_type() ==='program'){
                     array_push($searchResults['programs'], array(
                         'title' => get_the_title(),
-                        'permalink' => get_the_permalink()
+                        'permalink' => get_the_permalink(),
+                        'id' => get_the_id()
                     ));
         }  
         if(get_post_type() ==='event'){
@@ -67,5 +69,30 @@ function universitySearchResults($data){
                     ));
         }  
    }
-    return $searchResults;
+
+   if($searchResults['programs']){
+        $programsMetaQuery = array('relation' => 'OR');
+        foreach($searchResults['programs'] as $dataPrograms){
+            array_push($programsMetaQuery, array(
+                'key' => 'related_programs',
+                'compare' => 'LIKE',
+                'value' => '"' . $dataPrograms['id'] . '"'
+            ));
+        }
+
+        $programRelationshipQuery = new WP_Query(array(
+            'post_type' => 'professor',
+            'meta_query'=> $programsMetaQuery
+        ));
+        while($programRelationshipQuery->have_posts()){
+            $programRelationshipQuery->the_post();
+            array_push($searchResults['professors'], array(
+                'title' => get_the_title(),
+                'permalink' => get_the_permalink(),
+                'image' => get_the_post_thumbnail_url(0,'professorLandscape')
+            ));
+        }
+        $searchResults['professors'] = array_values(array_unique($searchResults['professors'], SORT_REGULAR));
+   }
+return $searchResults;
 }
