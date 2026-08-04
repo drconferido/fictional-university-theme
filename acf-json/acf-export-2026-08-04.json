@@ -1,0 +1,346 @@
+[
+    {
+        "key": "group_69fad0ad7f8a3",
+        "title": "Event Date",
+        "fields": [
+            {
+                "key": "field_69fad10c440eb",
+                "label": "Event Date",
+                "name": "event_date",
+                "aria-label": "",
+                "type": "date_picker",
+                "instructions": "",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "display_format": "d\/m\/Y",
+                "return_format": "Ymd",
+                "first_day": 1,
+                "default_to_current_date": 0,
+                "allow_in_bindings": 0
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "event"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0,
+        "display_title": "",
+        "allow_ai_access": false,
+        "ai_description": ""
+    },
+    {
+        "key": "group_6a6c74634d9c2",
+        "title": "Main Body Content",
+        "fields": [
+            {
+                "key": "field_6a6c748dd8cad",
+                "label": "Main Body Content",
+                "name": "main_body_content",
+                "aria-label": "",
+                "type": "wysiwyg",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "allow_in_bindings": 0,
+                "tabs": "all",
+                "toolbar": "full",
+                "media_upload": 1,
+                "delay": 0
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "program"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "acf_after_title",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0,
+        "display_title": "",
+        "allow_ai_access": false,
+        "ai_description": ""
+    },
+    {
+        "key": "group_6a0c6c9569ce6",
+        "title": "Map Location",
+        "fields": [
+            {
+                "key": "field_6a0c6c95c88dc",
+                "label": "Map Location",
+                "name": "map_location",
+                "aria-label": "",
+                "type": "google_map",
+                "instructions": "",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "center_lat": "",
+                "center_lng": "",
+                "zoom": "",
+                "height": "",
+                "allow_in_bindings": 0
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "campus"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0,
+        "display_title": "",
+        "allow_ai_access": false,
+        "ai_description": ""
+    },
+    {
+        "key": "group_6a096a4833f46",
+        "title": "Page Banner",
+        "fields": [
+            {
+                "key": "field_6a096a48bf5d9",
+                "label": "Page Banner Subtitle",
+                "name": "page_banner_subtitle",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "allow_in_bindings": 0,
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_6a096ababf5da",
+                "label": "Page Banner background Image",
+                "name": "page_banner_background_image",
+                "aria-label": "",
+                "type": "image",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array",
+                "library": "all",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": "",
+                "allow_in_bindings": 0,
+                "preview_size": "medium"
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "post"
+                }
+            ],
+            [
+                {
+                    "param": "post_type",
+                    "operator": "!=",
+                    "value": "post"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0,
+        "display_title": "",
+        "allow_ai_access": false,
+        "ai_description": ""
+    },
+    {
+        "key": "group_6a02ca2f2fcb1",
+        "title": "Related Program",
+        "fields": [
+            {
+                "key": "field_6a02ca85863b3",
+                "label": "Related Program(s)",
+                "name": "related_programs",
+                "aria-label": "",
+                "type": "relationship",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "post_type": [
+                    "program"
+                ],
+                "post_status": "",
+                "taxonomy": "",
+                "filters": [
+                    "search"
+                ],
+                "return_format": "object",
+                "min": "",
+                "max": "",
+                "allow_in_bindings": 0,
+                "elements": "",
+                "bidirectional": 0,
+                "bidirectional_target": []
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "event"
+                }
+            ],
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "professor"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0,
+        "display_title": "",
+        "allow_ai_access": false,
+        "ai_description": ""
+    },
+    {
+        "key": "group_6a71f8e2d9d78",
+        "title": "Relatede Campus(es)",
+        "fields": [
+            {
+                "key": "field_6a71f8e3e5257",
+                "label": "Related Campuses",
+                "name": "related_campus",
+                "aria-label": "",
+                "type": "relationship",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "post_type": [
+                    "campus"
+                ],
+                "post_status": "",
+                "taxonomy": "",
+                "filters": [
+                    "search"
+                ],
+                "return_format": "object",
+                "min": "",
+                "max": "",
+                "allow_in_bindings": 0,
+                "elements": "",
+                "bidirectional": 0,
+                "bidirectional_target": []
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "program"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0,
+        "display_title": "",
+        "allow_ai_access": false,
+        "ai_description": ""
+    }
+]

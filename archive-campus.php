@@ -6,8 +6,6 @@ pageBanner(array(
   'subtitle' => 'We have several coveniently located campuses.'
 ));
 ?>
-
-
         <div class="container container--narrow page-section">
 
           <div class="acf-map">
@@ -26,10 +24,6 @@ pageBanner(array(
 
 <?php } ?>
          </div>
-
-
-      
-  
 </div>
 
 <?php get_footer();

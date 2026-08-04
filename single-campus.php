@@ -32,6 +32,7 @@
          </div>
 
           <?php
+   
               $relatedPrograms = new WP_Query(array(
                  'posts_per_page' => -1,
                  'post_type' => 'program',
@@ -39,7 +40,7 @@
                  'order' => 'ASC',
                  'meta_query' => array(
                   array(
-                    'key' => 'related_campuses',
+                    'key' => 'related_campus',
                     'compare' => 'LIKE',
                     'value' => '"' . get_the_ID() . '"'
                   )

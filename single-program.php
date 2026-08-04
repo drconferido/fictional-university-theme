@@ -89,7 +89,7 @@
 
 
                 wp_reset_postdata();
-              $relatedCampuses = get_field('related_campuses');
+              $relatedCampuses = get_field('related_campus');
               if($relatedCampuses){
                 echo'<hr class="section-break">';
                 echo'<h2 class="headline headline--medium">' . get_the_title() . ' is 

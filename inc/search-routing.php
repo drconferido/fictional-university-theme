@@ -39,7 +39,18 @@ function universitySearchResults($data){
                         'image' => get_the_post_thumbnail_url(0,'professorLandscape')
                     ));
         }  
+    
         if(get_post_type() ==='program'){
+            $relatedCampuses = get_field('related_campus');
+            if($relatedCampuses){
+                    foreach($relatedCampuses as $campus){
+                        array_push($searchResults['campuses'], array(
+                            'title' => get_the_title($campus),
+                            'permalink' => get_the_permalink($campus)
+                        ));
+                    }
+                }
+
                     array_push($searchResults['programs'], array(
                         'title' => get_the_title(),
                         'permalink' => get_the_permalink(),
@@ -80,19 +91,39 @@ function universitySearchResults($data){
             ));
         }
 
-        $programRelationshipQuery = new WP_Query(array(
-            'post_type' => 'professor',
+      $programRelationshipQuery = new WP_Query(array(
+              'post_type' => array('professor','event'),
             'meta_query'=> $programsMetaQuery
         ));
-        while($programRelationshipQuery->have_posts()){
-            $programRelationshipQuery->the_post();
-            array_push($searchResults['professors'], array(
-                'title' => get_the_title(),
-                'permalink' => get_the_permalink(),
-                'image' => get_the_post_thumbnail_url(0,'professorLandscape')
-            ));
-        }
+
+while($programRelationshipQuery->have_posts()){
+    $programRelationshipQuery->the_post();
+
+    if(get_post_type() === 'event'){
+        $eventDateValue = new DateTime(get_field('event_date'));
+        $description = has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 18);
+
+        array_push($searchResults['events'], array(
+            'title' => get_the_title(),
+            'permalink' => get_the_permalink(),
+            'month' => $eventDateValue->format('M'),
+            'day' => $eventDateValue->format('d'),
+            'description' => $description,
+        ));
+    }
+
+    if(get_post_type() === 'professor'){
+        array_push($searchResults['professors'], array(
+            'title' => get_the_title(),
+            'permalink' => get_the_permalink(),
+            'image' => get_the_post_thumbnail_url(0,'professorLandscape')
+        ));
+    }
+}
+
+
         $searchResults['professors'] = array_values(array_unique($searchResults['professors'], SORT_REGULAR));
+        $searchResults['events'] = array_values(array_unique($searchResults['events'], SORT_REGULAR));
    }
 return $searchResults;
 }
