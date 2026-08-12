@@ -51,10 +51,7 @@ while(have_posts()){
 
 
       <div class="generic-content">
-<form method="get" action="<?php echo esc_url(site_url('/')); ?>" class="search-form">
-    <input type="search" name="s" placeholder="What are you looking for?" class="search-field">
-    <input type="submit" value="Search">
-</form>
+            <?php the_content(); ?>
       </div>
     </div>
 
