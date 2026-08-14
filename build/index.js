@@ -2258,9 +2258,10 @@ class MyNotes {
     this.events();
   }
   events() {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()(".delete-note").on("click", this.deleteNote);
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()(".edit-note").on("click", this.editNote.bind(this));
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()(".update-note").on("click", this.updateNote.bind(this));
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()("#my-notes").on("click", ".delete-note", this.deleteNote);
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()("#my-notes").on("click", ".edit-note", this.editNote.bind(this));
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()("#my-notes").on("click", ".update-note", this.updateNote.bind(this));
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()(".submit-note").on("click", this.createNote.bind(this));
   }
   editNote(e) {
     var thisNote = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parents("li");
@@ -2322,6 +2323,40 @@ class MyNotes {
       },
       error: response => {
         console.log("Sorry, but your note was not deleted.");
+        console.log(response);
+      }
+    });
+  }
+  createNote(e) {
+    var ourNewPost = {
+      title: jquery__WEBPACK_IMPORTED_MODULE_0___default()(".new-note-title").val(),
+      content: jquery__WEBPACK_IMPORTED_MODULE_0___default()(".new-note-body").val(),
+      status: "publish"
+    };
+    var newNoteTitle = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".new-note-title").val();
+    jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
+      beforeSend: xhr => {
+        xhr.setRequestHeader('X-WP-Nonce', universityDataRootUrl.nonce);
+      },
+      url: universityDataRootUrl.root_url + "/wp-json/wp/v2/note/",
+      type: "POST",
+      data: ourNewPost,
+      success: response => {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(".new-note-title, .new-note-body").val('');
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(`
+                    <li data-id="${response.id}">
+                <input class="note-title-field" value="${response.title.raw}" readonly>
+                <span class="edit-note"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</span>
+                <span class="delete-note"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</span>
+                <textarea class="note-body-field" readonly>${response.content.raw}</textarea>
+                <span class="update-note btn btn--blue btn--small"><i class="fa fa-arrow-right" aria-hidden="true"></i> Save</span>
+            </li>
+                    `).prependTo("#my-notes").hide().slideDown();
+        console.log("Congrats, your note was updated!");
+        console.log(response);
+      },
+      error: response => {
+        console.log("Sorry, but your note was not updated.");
         console.log(response);
       }
     });
